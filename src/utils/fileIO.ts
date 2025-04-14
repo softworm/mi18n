@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { Message, MessageType } from './message';
 import { Utils } from './index';
+import logger from './log';
 
 const fs = require('fs');
 const path = require('path');
@@ -231,7 +232,7 @@ export class FileIO {
    * @param isUri 是否是uri
    * @returns
    */
-  static getFolderFiles(folderPath: string, isUri: boolean = false) {
+  static getFolderFiles(folderPath: string, ignorePaths: string[],  isUri: boolean = false) {
     return new Promise((resolve, reject) => {
       if (!folderPath) {
         reject('文件夹路径不能为空');
@@ -247,6 +248,11 @@ export class FileIO {
         // 创建一组 promise 用于处理递归读取
         const promises = files.map((file) => {
           const filePath = path.join(folderPath, file);
+          
+          if(Utils.shouldIgnorePath(filePath, ignorePaths)){
+            logger.logInfo(`按配置规则，已忽略此文件 ${filePath}`);
+            return Promise.resolve();
+          }
 
           return new Promise<void>((resolve, reject) => {
             fs.stat(filePath, (err, stats) => {
@@ -257,7 +263,7 @@ export class FileIO {
 
               if (stats.isDirectory()) {
                 // 如果是目录，递归读取
-                FileIO.getFolderFiles(filePath)
+                FileIO.getFolderFiles(filePath, ignorePaths, isUri)
                   .then((subFileUris: any[]) => {
                     if (isUri) {
                       fileUris.push(...subFileUris);

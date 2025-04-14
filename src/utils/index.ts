@@ -1057,4 +1057,8 @@ export class Utils {
     return results;
   }
 
+  static shouldIgnorePath(fileName: string, ignorePaths: string[]) {
+    return ignorePaths.some(t => fileName.includes(t));
+  }
+
 }

@@ -101,7 +101,7 @@ export async function activate(context: vscode.ExtensionContext) {
 							VSCodeUI.renderDecoration(config);
 						};
             
-            if(config.shouldIgnore(fileName)){
+            if(Utils.shouldIgnorePath(fileName, config.getIgnorePaths())){
               logger.logInfo(`按配置规则，已忽略此文件 ${fileName}`);
               return;
             }
@@ -149,12 +149,12 @@ export async function activate(context: vscode.ExtensionContext) {
 						const isSingleQuote = config.getIsSingleQuote();
 						const defaultLang = config.getDefaultLang();
 						const tempPaths = config.getTempPaths();
+            const ignorePaths = config.getIgnorePaths();
 
-						FileIO.getFolderFiles(folderPath)
+						FileIO.getFolderFiles(folderPath, ignorePaths)
 							.then(async (files: any[]) => {
-								logger.logObject('files', files);
 								files.forEach((file: any, i: number) => {
-									logger.logObject('file', file);
+									logger.logObject('开始处理文件', file);
 								  const fileName = file;
 									const prefixKey = config.getPrefixKey(fileName, i.toString());
 									const pageEnName = config.generatePageEnName(fileName);

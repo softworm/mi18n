@@ -83,7 +83,7 @@ export class Config {
     this.jsonReg = /\.(json)$/; // json文件
     this.vueReg = /\.(vue)$/; // vue文件
 
-    this.ignorePaths = []; // 忽略路径或文件
+    this.ignorePaths = [".json"]; // 忽略路径或文件
   }
 
   async readConfig() {
@@ -868,10 +868,6 @@ export class Config {
   async getOnlineLanguage(lang: string = '', isAll = false) {
     const areaLang = lang || this.defaultLang;
     await this.queryLangWords(areaLang, isAll);
-  }
-
-  shouldIgnore(fileName: string) {
-    return this.ignorePaths.some(t => fileName.includes(t));
   }
 
   request(url, params, method = 'get') {
