@@ -28,7 +28,7 @@ export class ViewLoader {
     this.panel.webview.onDidReceiveMessage(
       (message: any) => {
         // 自定义命令，传递给上一层
-        vscode.commands.executeCommand('extension.du.i18n.receive', message);
+        vscode.commands.executeCommand('extension.mi18n.receive', message);
       },
       null,
       this.disposables

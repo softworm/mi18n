@@ -1,10 +1,10 @@
 {
-	"name": "du-i18n",
-	"displayName": "Du I18N",
+	"name": "mi18n",
+	"displayName": "Mi18n",
 	"description": "vscode国际化多语言解决方案",
-	"author": "程天庆",
-	"publisher": "DewuTeam",
-	"version": "1.4.1",
+	"author": "王大锤",
+	"publisher": "Softworm",
+	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.59.0"
 	},
@@ -16,20 +16,13 @@
 		"Notebooks"
 	],
 	"keywords": [
-		"du",
-		"du-i18n",
-		"du i18n",
 		"i18n",
 		"i18n Ally",
 		"i18n ally",
 		"i18n-ally",
 		"vue i18n",
-		"electron",
 		"vue3 i18n",
 		"react i18n",
-		"shopify-i18n",
-		"shopify",
-		"i18next",
 		"多语言",
 		"多语言插件",
 		"多语言翻译",
@@ -48,80 +41,59 @@
 		"vue",
 		"vue3",
 		"react",
-		"ali",
 		"react-intl",
 		"国际化 i18n",
 		"国际化插件"
 	],
 	"icon": "public/logo.png",
 	"activationEvents": [
-		"*"
+		"onStartupFinished"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.du.i18n.change",
-				"title": "语言切换"
-			},
-			{
-				"command": "extension.du.i18n.setting",
+				"command": "extension.mi18n.setting",
 				"title": "设置"
 			},
 			{
-				"command": "extension.du.i18n.scanAndGenerate",
+				"command": "extension.mi18n.change",
+				"title": "语言切换"
+			},
+			{
+				"command": "extension.mi18n.scanAndGenerate",
 				"title": "扫描中文"
 			},
 			{
-				"command": "extension.du.i18n.multiScanAndGenerate",
+				"command": "extension.mi18n.multiScanAndGenerate",
 				"title": "批量扫描中文"
 			},
 			{
-				"command": "extension.du.i18n.translateFromChineseKey",
+				"command": "extension.mi18n.mergeLangFile",
+				"title": "合并临时文件"
+			},
+			{
+				"command": "extension.mi18n.splitLangFile",
+				"title": "按语言拆分资源"
+			},
+			{
+				"command": "extension.mi18n.translateFromChineseKey",
 				"title": "在线翻译"
 			},
 			{
-				"command": "extension.du.i18n.multiTranslateFromChineseKey",
-				"title": "批量在线翻译"
-			},
-			{
-				"command": "extension.du.i18n.updateLocalToOnline",
-				"title": "上传文案"
-			},
-			{
-				"command": "extension.du.i18n.batchUpdateLocalToOnline",
-				"title": "批量上传文案"
-			},
-			{
-				"command": "extension.du.i18n.missingDetection",
+				"command": "extension.mi18n.missingDetection",
 				"title": "翻译漏检"
 			},
 			{
-				"command": "extension.du.i18n.updateLocalFromOnline",
-				"title": "拉取远程文案"
+				"command": "extension.mi18n.updateLocalLangPackage",
+				"title": "刷新回显"
 			},
 			{
-				"command": "extension.du.i18n.searchUntranslateText",
-				"title": "远程漏检文案"
-			},
-			{
-				"command": "extension.du.i18n.updateLocalLangPackage",
-				"title": "刷新数据"
-			},
-			{
-				"command": "extension.du.i18n.mergeLangFile",
-				"title": "合并语言文件"
-			},
-			{
-				"command": "extension.du.i18n.splitLangFile",
-				"title": "拆分语言文件"
-			},
-			{
-				"command": "extension.du.i18n.analytics",
+				"command": "extension.mi18n.analytics",
 				"title": "文件统计"
 			},
 			{
-				"command": "extension.du.i18n.receive",
+				"command": "extension.mi18n.receive",
 				"title": "自定义命令"
 			}
 		],
@@ -129,97 +101,55 @@
 			"editor/context": [
 				{
 					"when": "resourceExtname =~ /\\.(ts|js|tsx|jsx|vue|mpx|html|json|yaml|yml)$/",
-					"submenu": "submenu/command",
+					"submenu": "mi18n-mainmenu",
 					"group": "navigation"
 				}
 			],
-			"submenu/command": [
+			"mi18n-mainmenu": [
+        {
+          "command": "extension.mi18n.setting",
+          "group": "1_basic@1"
+        },
 				{
-					"command": "extension.du.i18n.change",
-					"group": "7_modification@3"
+					"command": "extension.mi18n.change",
+					"group": "1_basic@2"
 				},
 				{
-					"command": "extension.du.i18n.scanAndGenerate",
-					"group": "2_workspace@1"
+					"command": "extension.mi18n.scanAndGenerate",
+					"group": "2_main@1"
 				},
 				{
-					"command": "extension.du.i18n.multiScanAndGenerate",
-					"group": "3_compare@2"
+					"command": "extension.mi18n.multiScanAndGenerate",
+					"group": "2_main@2"
 				},
 				{
-					"command": "extension.du.i18n.translateFromChineseKey",
-					"group": "2_workspace@2"
+					"command": "extension.mi18n.mergeLangFile",
+					"group": "2_main@3"
 				},
 				{
-					"command": "extension.du.i18n.updateLocalToOnline",
-					"group": "2_workspace@3"
+					"command": "extension.mi18n.splitLangFile",
+					"group": "2_main@4"
 				},
 				{
-					"command": "extension.du.i18n.multiTranslateFromChineseKey",
-					"group": "3_compare@5"
+					"command": "extension.mi18n.missingDetection",
+					"group": "3_tool@1"
 				},
 				{
-					"command": "extension.du.i18n.batchUpdateLocalToOnline",
-					"group": "3_compare@16"
+					"command": "extension.mi18n.updateLocalLangPackage",
+					"group": "3_tool@2"
 				},
 				{
-					"command": "extension.du.i18n.updateLocalFromOnline",
-					"group": "4_search@18"
-				},
-				{
-					"command": "extension.du.i18n.missingDetection",
-					"group": "2_workspace@4"
-				},
-				{
-					"command": "extension.du.i18n.searchUntranslateText",
-					"group": "4_search@20"
-				},
-				{
-					"command": "extension.du.i18n.mergeLangFile",
-					"group": "5_cutcopypaste@21"
-				},
-				{
-					"command": "extension.du.i18n.splitLangFile",
-					"group": "5_cutcopypaste@25"
-				},
-				{
-					"command": "extension.du.i18n.updateLocalLangPackage",
-					"group": "7_modification@8"
-				},
-				{
-					"command": "extension.du.i18n.analytics",
-					"group": "7_modification@10"
-				},
-				{
-					"command": "extension.du.i18n.setting",
-					"group": "z_commands@20"
+					"command": "extension.mi18n.analytics",
+					"group": "3_tool@3"
 				}
 			]
 		},
 		"submenus": [
 			{
-				"id": "submenu/command",
-				"label": "国际化（i18n）"
+				"id": "mi18n-mainmenu",
+				"label": "mi18n"
 			}
-		],
-		"telemetry": {
-			"key": "G-ZXEWB1PNPW",
-			"event1": "extension_du_i18n_change",
-			"event2": "extension_du_i18n_setting",
-			"event3": "extension_du_i18n_scanAndGenerate",
-			"event4": "extension_du_i18n_multiScanAndGenerate",
-			"event5": "extension_du_i18n_translateFromChineseKey",
-			"event6": "extension_du_i18n_updateLocalToOnline",
-			"event7": "extension_du_i18n_missingDetection",
-			"event8": "extension_du_i18n_updateLocalFromOnline",
-			"event9": "extension_du_i18n_searchUntranslateText",
-			"event10": "extension_du_i18n_updateLocalLangPackage",
-			"event11": "extension_du_i18n_generateLangFile",
-			"event12": "extension_du_i18n_analytics",
-			"event13": "extension_du_i18n_receive",
-			"event14": "extension_du_i18n_batchUpdateOnline",
-			"event21": "du_i18n_deyi_init"
-		}
+		]
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
