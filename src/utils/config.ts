@@ -44,7 +44,7 @@ export class Config {
   private ignorePaths: string[];
 
   constructor(props: any = {}) {
-    this.configFilePath = `/du-i18n.config.json`;// du-i18n配置文件
+    this.configFilePath = `/mi18n.config.json`;// du-i18n配置文件
     this.projectName = '';// deyi项目名称
     this.projectShortName = '';// deyi项目简称
     this.onlineApiUrl = '';// 地址url
