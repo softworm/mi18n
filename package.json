@@ -62,11 +62,11 @@
 			},
 			{
 				"command": "extension.mi18n.scanAndGenerate",
-				"title": "扫描中文"
+				"title": "扫描并替换-当前文件"
 			},
 			{
 				"command": "extension.mi18n.multiScanAndGenerate",
-				"title": "批量扫描中文"
+				"title": "扫描并替换-全部文件"
 			},
 			{
 				"command": "extension.mi18n.mergeLangFile",
