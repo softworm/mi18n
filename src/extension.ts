@@ -257,7 +257,6 @@ export async function activate(context: vscode.ExtensionContext) {
 		context.subscriptions.push(vscode.commands.registerTextEditorCommand(
 			'extension.mi18n.setting', 
 			async function () {
-				// openConfigCommand();
 				const activeEditor = vscode.window.activeTextEditor;
 				if (activeEditor) {
 					const { fileName } = activeEditor.document || {};

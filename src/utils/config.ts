@@ -41,6 +41,7 @@ export class Config {
   private fileReg: RegExp;
   private jsonReg: RegExp;
   private vueReg: RegExp;
+  private ignorePaths: string[];
 
   constructor(props: any = {}) {
     this.configFilePath = `/du-i18n.config.json`;// du-i18n配置文件
@@ -81,7 +82,10 @@ export class Config {
     this.fileReg = /\.(ts|js|tsx|jsx|vue|html|mpx)$/; // 识别的文件
     this.jsonReg = /\.(json)$/; // json文件
     this.vueReg = /\.(vue)$/; // vue文件
+
+    this.ignorePaths = []; // 忽略路径或文件
   }
+
   async readConfig() {
     const files = await FileIO.getFiles('**' + this.configFilePath);
     // TODO: 暂时只支持一个配置文件，多个会冲突，需要优化
@@ -92,14 +96,13 @@ export class Config {
           const data = fs.readFileSync(fsPath, 'utf-8');
           if (data) {
             const config = eval(`(${data})`);
-            // console.log("config", config);
             const {
               projectName, projectShortName, onlineApiUrl, version, multiFolders,
               bigFileLineCount, pullLangs, tempLangs, defaultLang, quoteKeys,
               transSourcePaths, tempPaths, tempFileName, isOverWriteLocal, uncheckMissKeys,
               fileReg, isNeedRandSuffix, langPaths, isSingleQuote,
               isOnlineTrans, baiduAppid, baiduSecrectKey, prefixKey,
-              vueReg, keyJoinStr, keyBoundaryChars,isHookImport,
+              vueReg, keyJoinStr, keyBoundaryChars,isHookImport,ignorePaths
             } = config || {};
             this.projectName = projectName;
             this.projectShortName = projectShortName;
@@ -129,6 +132,7 @@ export class Config {
 
             // this.fileReg = fileReg || this.fileReg;
             this.vueReg = vueReg ? new RegExp(vueReg.slice(1, -1)) : this.vueReg;
+            this.ignorePaths = Array.isArray(ignorePaths) && ignorePaths.length ? ignorePaths : this.ignorePaths;
           }
         } catch (e) {
           console.error(e);
@@ -169,6 +173,8 @@ export class Config {
       isHookImport: this.isHookImport,
       // 是否开启在线翻译
       isOnlineTrans: this.isOnlineTrans,
+      // 忽略的路径和文件
+      ignorePaths: this.ignorePaths,
       // 本地-百度翻译appid
       baiduAppid: this.baiduAppid,
       // 本地-百度翻译密钥
