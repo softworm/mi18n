@@ -582,7 +582,7 @@ export class Utils {
         const keyStr = isSingleQuote ? `'${key}'` : `"${key}"`;
         let i18nT = `${suffix}(${keyStr})`;
         if (varObj[char]) {
-          i18nT = `${suffix}(${keyStr}, [${varObj[char].varList}])`;
+          i18nT = `${suffix}(${keyStr}, [${varObj[char].varList.toString(", ")}])`;
         }
         return i18nT;
       };
@@ -711,7 +711,7 @@ export class Utils {
         const keyStr = isSingleQuote ? `'${key}'` : `"${key}"`;
         let i18nT = `${suffix}(${keyStr})`;
         if (varObj[char]) {
-          i18nT = `${suffix}(${keyStr}, [${varObj[char].varList}])`;
+          i18nT = `${suffix}(${keyStr}, [${varObj[char].varList.toString(", ")}])`;
         }
         return i18nT;
       };
@@ -767,7 +767,7 @@ export class Utils {
         const keyStr = isSingleQuote ? `'${key}'` : `"${key}"`;
         let i18nT = `${suffix}(${keyStr})`;
         if (varObj[char]) {
-          i18nT = `${suffix}(${keyStr}, [${varObj[char].varList}])`;
+          i18nT = `${suffix}(${keyStr}, [${varObj[char].varList.toString(", ")}])`;
         }
         return i18nT;
       };
