@@ -53,7 +53,7 @@ export async function activate(context: vscode.ExtensionContext) {
 						const configFilePath = config.getConfigFilePath();
 						if (FileIO.isIncludePath(fileName, configFilePath)) {
 							config.init(context, () => {});
-							logger.logObject("deyi2", config);
+							logger.logObject("已刷新配置", config);
 						}
 					}
 					if (fileReg.test(fileName)) {
@@ -269,7 +269,7 @@ export async function activate(context: vscode.ExtensionContext) {
 					config.openSetting(fileName, (isInit) => {
 						if (isInit) {
 							config.init(context, () => {});
-							logger.logObject("deyi2", config);
+							logger.logObject("已生成配置文件", config);
 						}
 					});
 				}
@@ -370,7 +370,7 @@ export async function activate(context: vscode.ExtensionContext) {
 				// logger.logInfo("selectFolder", selectFolder);
 				if (!selectFolder || !selectFolder[0] || !selectFolder[0].path) {return;}
 				const result: any = await Utils.handleAnalystics(selectFolder[0].path, config.getBigFileLineCount());
-				logger.logObject("result", result);
+				logger.logObject("分析与统计-结果", result);
 				const panel = vscode.window.createWebviewPanel(
 					'analyticsResult',
 					'分析与统计-结果',
@@ -415,7 +415,7 @@ export async function activate(context: vscode.ExtensionContext) {
 					const { fileName } = activeEditor.document || {};
 					const missCheckResultPath = config.getMissCheckResultPath();
 					const result: any = await config.handleMissingDetection();
-					logger.logObject("result", result);
+					logger.logObject("翻译漏检-结果", result);
 					let str = `翻译漏检-结果：\n`;
 					if ((!isEmpty(result))) {
 						const missTranslateKeys = result.missTranslateKeys;
