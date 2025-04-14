@@ -100,6 +100,12 @@ export async function activate(context: vscode.ExtensionContext) {
 							await config.refreshGlobalLangObj();
 							VSCodeUI.renderDecoration(config);
 						};
+            
+            if(config.shouldIgnore(fileName)){
+              logger.logInfo(`按配置规则，已忽略此文件 ${fileName}`);
+              return;
+            }
+
 						Utils.handleScanAndInit(fileName, initLang, keys, defaultLang, prefixKey, isSingleQuote, keyBoundaryChars, vueReg, isHookImport, (newLangObj) => {
 							if (!isEmpty(newLangObj)) {
 								FileIO.writeIntoTempFile(tempPaths, fileName, newLangObj, pageEnName, tempFileName, isNeedRandSuffix, async () => {

@@ -102,7 +102,7 @@ export class Config {
               transSourcePaths, tempPaths, tempFileName, isOverWriteLocal, uncheckMissKeys,
               fileReg, isNeedRandSuffix, langPaths, isSingleQuote,
               isOnlineTrans, baiduAppid, baiduSecrectKey, prefixKey,
-              vueReg, keyJoinStr, keyBoundaryChars,isHookImport,ignorePaths
+              vueReg, keyJoinStr, keyBoundaryChars, isHookImport, ignorePaths
             } = config || {};
             this.projectName = projectName;
             this.projectShortName = projectShortName;
@@ -316,6 +316,10 @@ export class Config {
 
   getVueReg() {
     return this.vueReg;
+  }
+
+  getIgnorePaths() {
+    return this.ignorePaths;
   }
 
   getCurLangObj(userKey: string = '') {
@@ -544,7 +548,7 @@ export class Config {
             }
           }
         });
-        
+
         if (!isEmpty(defaultKeyObj) && type === 'fileName') {
           result['missTranslateKeys'] = Object.keys(defaultKeyObj);
         }
@@ -864,6 +868,10 @@ export class Config {
   async getOnlineLanguage(lang: string = '', isAll = false) {
     const areaLang = lang || this.defaultLang;
     await this.queryLangWords(areaLang, isAll);
+  }
+
+  shouldIgnore(fileName: string) {
+    return this.ignorePaths.some(t => fileName.includes(t));
   }
 
   request(url, params, method = 'get') {
