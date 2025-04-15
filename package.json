@@ -4,7 +4,7 @@
 	"description": "vscode国际化多语言解决方案",
 	"author": "王大锤",
 	"publisher": "Softworm",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"engines": {
 		"vscode": "^1.59.0"
 	},
