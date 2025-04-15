@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { API } from './api';
 import { FileIO } from './fileIO';
+import logger from './log';
 const fs = require('fs');
 const path = require('path');
 const isEmpty = require('lodash/isEmpty');
@@ -44,14 +45,14 @@ export class Config {
   private ignorePaths: string[];
 
   constructor(props: any = {}) {
-    this.configFilePath = `/mi18n.config.json`;// du-i18n配置文件
+    this.configFilePath = `mi18n.config.json`;// du-i18n配置文件
     this.projectName = '';// deyi项目名称
     this.projectShortName = '';// deyi项目简称
     this.onlineApiUrl = '';// 地址url
     this.version = '';// deyi版本
-    this.langPaths = '**/src/i18n/locale/**';// 语言文件路径
-    this.transSourcePaths = '**/src/i18n/source/**';// 翻译源文件路径
-    this.tempPaths = '**/src/i18n/temp/**';// 新增翻译文案路径
+    this.langPaths = 'src/i18n/locale/**';// 语言文件路径
+    this.transSourcePaths = 'src/i18n/source/**';// 翻译源文件路径
+    this.tempPaths = 'src/i18n/temp/**';// 新增翻译文案路径
     this.tempFileName = '';// 指定生成json文件名
     this.localLangFilePath = '/.language.md';// 拉取远程语言保存本地文件路径
     this.missCheckResultPath = '/.languageMissLocal.md';// 翻译漏检本地文件路径
@@ -60,9 +61,9 @@ export class Config {
     this.onlineLangObj = {};// 线上语言数据
     this.transSourceObj = {}; // key为中文的翻译源文案
     this.multiFolders = ['src', 'pages'];// 复杂文件夹
-    this.defaultLang = 'zh';// 默认语言
+    this.defaultLang = 'zh-Hans';// 默认语言
     this.pullLangs = []; // 指定翻译扩展的语言，优先级比tempLangs高，远程不允许覆盖
-    this.tempLangs = ['zh', 'en'];// 翻译扩展语言，远程的会覆盖
+    this.tempLangs = ['zh-Hans', 'en'];// 翻译扩展语言，远程的会覆盖
     this.quoteKeys = ["this.$t", "$t", "i18n.t"]; // 引用key
     this.keyBoundaryChars = ['\n', '>', '<', '}', '{', '(', ')']; // 引用key的边界字符
     this.bigFileLineCount = 1000;// 大文件行数
@@ -87,8 +88,7 @@ export class Config {
   }
 
   async readConfig() {
-    const files = await FileIO.getFiles('**' + this.configFilePath);
-    // TODO: 暂时只支持一个配置文件，多个会冲突，需要优化
+    const files = await FileIO.getFiles(this.configFilePath);
     files.forEach(({ fsPath }) => {
       const fileName = path.basename(fsPath);
       if (/\.(json)$/.test(fileName)) {
@@ -331,6 +331,7 @@ export class Config {
   async readLocalGlobalLangObj() {
     try {
       if (this.tempPaths) {
+        logger.logInfo("开始读取临时资源：" + this.tempPaths);
         const files = await FileIO.getFiles(this.tempPaths);
         files.forEach(({ fsPath }) => {
           const fileName = path.basename(fsPath);
@@ -353,12 +354,13 @@ export class Config {
                 }
               }
             } catch (e) {
-              console.error(e);
+              logger.logError("读取临时资源出错", e);
             }
           }
         });
       }
       if (this.langPaths) {
+        logger.logInfo("开始读取语言资源：" + this.langPaths);
         const langFiles = await FileIO.getFiles(this.langPaths);
         langFiles.forEach(({ fsPath }) => {
           const fileName = path.basename(fsPath);
@@ -384,7 +386,7 @@ export class Config {
         });
       }
     } catch (e) {
-      console.error("readLocalGlobalLangObj", e);
+      logger.logError("读取语言资源出错", e);
     }
   }
 

@@ -52,8 +52,9 @@ export async function activate(context: vscode.ExtensionContext) {
 						}
 						const configFilePath = config.getConfigFilePath();
 						if (FileIO.isIncludePath(fileName, configFilePath)) {
-							config.init(context, () => {});
-							logger.logObject("已刷新配置", config);
+							config.init(context, () => {
+                logger.logObject("已刷新配置", config);
+              });
 						}
 					}
 					if (fileReg.test(fileName)) {
